@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Router",
   "main": "server.js",
+  "dependencies": {
+    "sha": "file:./sha.js"
+  },
   "engine": {
     "node": "*",
     "npm": "*"
