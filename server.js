@@ -1,14 +1,36 @@
 var http = require('http');
-var hash1_pass = hex_hmac_sha256('$1$SERCOMM$', 'test123');
-var user_password = hex_hmac_sha256("6E9925BE5119D153", hash1_pass);
+var fs = require('fs');
 var server = http.createServer();
-function control(petic, resp) {
-resp.writeHead(200, {'content-type': 'text/plain'});
-resp.write(user_password);
-resp.end();
+function control(req, resp) {
+if (req.method == 'POST') {
+	req.on('data', function (data) {
+		body += data;
+    });
+    req.on('end', function () {
+        var enc_key = getParameterByName('enc_key', body);
+		var pass = getParameterByName('pass', body);
+		var hash1_pass = hex_hmac_sha256('$1$SERCOMM$', pass);
+		var user_password = hex_hmac_sha256(enc_key, hash1_pass);
+	});
+	resp.writeHead(200, {'content-type': 'text/plain'});
+	resp.write(user_password);
+	resp.end();
+}
+else if (req.method == 'GET') {
+	resp.write("Petició invàlida");	
+}
+
 }
 server.on('request', control);
 server.listen(8080);
+function getParameterByName(name, url) {
+	name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
 var hexcase = 0;  /* hex output format. 0 - lowercase; 1 - uppercase        */
 var b64pad  = ""; /* base-64 pad character. "=" for strict RFC compliance   */
 
