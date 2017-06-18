@@ -9,11 +9,12 @@ if (req.method == 'POST') {
 		body += data;
 		var enc_key = getParameterByName('enc_key', body);
 		var pass = getParameterByName('pass', body);
+		console.log(body);
 		var hash1_pass = hex_hmac_sha256('$1$SERCOMM$', pass);
 		user_password = hex_hmac_sha256(enc_key, hash1_pass);
     });
     req.on('end', function () {
-        
+        console.log(body);
 	});
 	resp.writeHead(200, {'content-type': 'text/plain'});
 	resp.write(user_password);
