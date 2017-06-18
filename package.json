@@ -1,5 +1,5 @@
 {
-  "name": "routerpilar",
+  "name": "router-pilar",
   "version": "0.0.1",
   "description": "Router",
   "main": "server.js",
@@ -9,5 +9,8 @@
   },
   "scripts": {
     "start": "node server.js",
-  }
+  },
+  "private": true,
+  "author": "Oriol Huguet <@gmail.com>",
+  "license": "MIT"
 }

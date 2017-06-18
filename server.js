@@ -1,5 +1,5 @@
 var http = require('http');
-var sha = require('sha.js');
+var sha = require('sha');
 var hash1_pass = sha.hex_hmac_sha256('$1$SERCOMM$', 'test123');
 var user_password = sha.hex_hmac_sha256("6E9925BE5119D153", hash1_pass);
 var server = http.createServer();
