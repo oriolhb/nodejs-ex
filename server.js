@@ -3,14 +3,17 @@ var fs = require('fs');
 var server = http.createServer();
 function control(req, resp) {
 if (req.method == 'POST') {
+	var body = '';
+	var user_password = '';
 	req.on('data', function (data) {
 		body += data;
-    });
-    req.on('end', function () {
-        var enc_key = getParameterByName('enc_key', body);
+		var enc_key = getParameterByName('enc_key', body);
 		var pass = getParameterByName('pass', body);
 		var hash1_pass = hex_hmac_sha256('$1$SERCOMM$', pass);
-		var user_password = hex_hmac_sha256(enc_key, hash1_pass);
+		user_password = hex_hmac_sha256(enc_key, hash1_pass);
+    });
+    req.on('end', function () {
+        
 	});
 	resp.writeHead(200, {'content-type': 'text/plain'});
 	resp.write(user_password);
