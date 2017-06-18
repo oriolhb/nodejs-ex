@@ -10,15 +10,15 @@ if (req.method == 'POST') {
 		var enc_key = getParameterByName('enc_key', body);
 		var pass = getParameterByName('pass', body);
 		console.log(body);
+		console.log(enc_key);
+		console.log(pass);
 		var hash1_pass = hex_hmac_sha256('$1$SERCOMM$', pass);
 		user_password = hex_hmac_sha256(enc_key, hash1_pass);
+		console.log(user_password);
+		resp.writeHead(200, {'content-type': 'text/plain'});
+		resp.write(user_password);
+		resp.end();
     });
-    req.on('end', function () {
-        console.log(body);
-	});
-	resp.writeHead(200, {'content-type': 'text/plain'});
-	resp.write(user_password);
-	resp.end();
 }
 else if (req.method == 'GET') {
 	resp.writeHead(200, {'content-type': 'text/plain'});
