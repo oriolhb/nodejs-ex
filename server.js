@@ -17,7 +17,9 @@ if (req.method == 'POST') {
 	resp.end();
 }
 else if (req.method == 'GET') {
-	resp.write("Petició invàlida");	
+	resp.writeHead(200, {'content-type': 'text/plain'});
+	resp.write("Petició invàlida");
+	resp.end();
 }
 
 }
